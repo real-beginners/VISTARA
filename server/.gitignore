@@ -1,11 +1,9 @@
 node_modules/
-.next/
-out/
-.DS_Store
-*.log
-.env*
+dist/
+.env
+.env.*
 !.env.example
-.pnpm-store/
+*.log
 *.tsbuildinfo
 
 # Firebase Service Account Credentials
@@ -14,4 +12,3 @@ out/
 *firebase-adminsdk*.json
 *.pem
 *.key
-
