@@ -173,7 +173,7 @@ export async function getUserTrips(userId: string): Promise<TripDocument[]> {
 export async function getTripById(
   tripId: string,
   userId: string
-): Promise<{ trip: TripDocument | null; isMember: boolean }> {
+): Promise<{ trip: TripDocument | null; isMember: boolean; tripExists: boolean }> {
   const db = getFirestoreDb();
   if (!db) {
     throw new Error("Firestore database is not available.");
@@ -183,12 +183,12 @@ export async function getTripById(
   const tripSnapshot = await tripRef.get();
 
   if (!tripSnapshot.exists) {
-    return { trip: null, isMember: false };
+    return { trip: null, isMember: false, tripExists: false };
   }
 
   const memberSnapshot = await tripRef.collection("members").doc(userId).get();
   if (!memberSnapshot.exists) {
-    return { trip: null, isMember: false };
+    return { trip: null, isMember: false, tripExists: true };
   }
 
   const tripData = tripSnapshot.data()!;
@@ -205,7 +205,9 @@ export async function getTripById(
 
   return {
     isMember: true,
+    tripExists: true,
     trip: {
+
       id: tripSnapshot.id,
       ownerId: tripData.ownerId,
       title: tripData.title,
