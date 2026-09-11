@@ -12,6 +12,8 @@ import { requireAuth } from "./middleware/auth";
 import userRoutes from "./routes/userRoutes";
 import tripRoutes from "./routes/tripRoutes";
 import invitationRoutes from "./routes/invitationRoutes";
+import aiRoutes from "./routes/aiRoutes";
+
 
 
 const app = express();
@@ -89,6 +91,10 @@ app.use("/api/trips", tripRoutes);
 
 // Trip invitation routes: GET /api/trip-invitations, POST /api/trip-invitations/:invitationId/accept, POST /api/trip-invitations/:invitationId/decline
 app.use("/api/trip-invitations", invitationRoutes);
+
+// AI test route: POST /api/ai/test
+app.use("/api/ai", aiRoutes);
+
 
 
 // Start listening
