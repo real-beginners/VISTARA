@@ -6,7 +6,7 @@ import { AuthNotice } from "@/components/auth/AuthNotice";
 import { Logo } from "@/components/layout/Logo";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
-import { getSession, updateOnboarding, type OnboardingPreferences } from "@/lib/auth";
+import { subscribeToAuth, updateOnboarding, type OnboardingPreferences } from "@/lib/auth";
 
 const steps = [
   { title: "What do you love?", copy: "Choose as many as feel like you.", options: [["🌿", "Nature"], ["🏔️", "Adventure"], ["🍜", "Food"], ["☕", "Cafés"], ["🎉", "Nightlife"], ["📸", "Photography"], ["🏛️", "History"], ["🎭", "Culture"], ["🛍️", "Shopping"], ["💎", "Hidden gems"], ["🎵", "Events"], ["🌅", "Relaxation"], ["🏖️", "Beaches"], ["🏕️", "Camping"], ["🚗", "Road trips"]] as [string, string][], multiple: true, key: "interests" as const },
@@ -29,7 +29,17 @@ export default function OnboardingPage() {
   const [saving, setSaving] = useState(false);
   const current = steps[step];
 
-  useEffect(() => { getSession().then((session) => { if (!session) router.replace("/login"); else { setUserId(session.user.id); setChecking(false); } }); }, [router]);
+  useEffect(() => {
+    const unsubscribe = subscribeToAuth((user) => {
+      if (!user) {
+        router.replace("/login");
+      } else {
+        setUserId(user.uid);
+        setChecking(false);
+      }
+    });
+    return () => unsubscribe();
+  }, [router]);
   const selected = useMemo(() => { const value = preferences[current.key]; return Array.isArray(value) ? value : value ? [value] : []; }, [current.key, preferences]);
 
   function toggle(value: string) {
