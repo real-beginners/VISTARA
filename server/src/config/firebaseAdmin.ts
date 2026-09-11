@@ -48,6 +48,18 @@ export function initializeFirebaseAdmin(): admin.app.App | null {
   }
 }
 
+let authAdmin: admin.auth.Auth | null = null;
+
+export function getFirebaseAuthAdmin(): admin.auth.Auth | null {
+  if (!authAdmin) {
+    const app = initializeFirebaseAdmin();
+    if (app) {
+      authAdmin = admin.auth(app);
+    }
+  }
+  return authAdmin;
+}
+
 export function getFirestoreDb(): Firestore | null {
   if (!db) {
     const app = initializeFirebaseAdmin();
@@ -57,6 +69,7 @@ export function getFirestoreDb(): Firestore | null {
   }
   return db;
 }
+
 
 export async function checkFirestoreConnection(): Promise<{
   connected: boolean;

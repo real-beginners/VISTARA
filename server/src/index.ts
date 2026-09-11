@@ -8,6 +8,8 @@ import {
   checkFirestoreConnection,
   isFirebaseAdminConfigured,
 } from "./config/firebaseAdmin";
+import { requireAuth } from "./middleware/auth";
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -53,6 +55,26 @@ app.get("/api/health", async (_req: Request, res: Response) => {
       configured: firebaseConfigured,
       firestore: firestoreCheck,
     },
+  });
+});
+
+/**
+ * GET /api/me
+ * Protected endpoint returning safe user identity details from verified Firebase ID token.
+ * Does not read or write any Firestore application data.
+ */
+app.get("/api/me", requireAuth, (req: Request, res: Response) => {
+  if (!req.user) {
+    res.status(401).json({
+      error: "Unauthorized",
+      message: "User identity could not be verified.",
+    });
+    return;
+  }
+
+  res.json({
+    uid: req.user.uid,
+    email: req.user.email ?? null,
   });
 });
 
