@@ -9,6 +9,7 @@ import {
   isFirebaseAdminConfigured,
 } from "./config/firebaseAdmin";
 import { requireAuth } from "./middleware/auth";
+import userRoutes from "./routes/userRoutes";
 
 
 const app = express();
@@ -77,6 +78,9 @@ app.get("/api/me", requireAuth, (req: Request, res: Response) => {
     email: req.user.email ?? null,
   });
 });
+
+// User profile routes: GET /api/users/me, PUT /api/users/me
+app.use("/api/users", userRoutes);
 
 // Start listening
 app.listen(PORT, () => {
