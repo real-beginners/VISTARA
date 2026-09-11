@@ -10,6 +10,8 @@ import {
 } from "./config/firebaseAdmin";
 import { requireAuth } from "./middleware/auth";
 import userRoutes from "./routes/userRoutes";
+import tripRoutes from "./routes/tripRoutes";
+import invitationRoutes from "./routes/invitationRoutes";
 
 
 const app = express();
@@ -81,6 +83,13 @@ app.get("/api/me", requireAuth, (req: Request, res: Response) => {
 
 // User profile routes: GET /api/users/me, PUT /api/users/me
 app.use("/api/users", userRoutes);
+
+// Trip routes: POST /api/trips, GET /api/trips, GET /api/trips/:tripId, POST /api/trips/:tripId/invitations
+app.use("/api/trips", tripRoutes);
+
+// Trip invitation routes: GET /api/trip-invitations, POST /api/trip-invitations/:invitationId/accept, POST /api/trip-invitations/:invitationId/decline
+app.use("/api/trip-invitations", invitationRoutes);
+
 
 // Start listening
 app.listen(PORT, () => {
