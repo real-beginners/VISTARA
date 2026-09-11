@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     default: "VISTARA — Plan journeys together",
     template: "%s — VISTARA",
   },
-  description: "A calm, collaborative workspace for planning meaningful journeys.",
+  description: "Discover places, plan journeys, and create memories together with Vistara.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

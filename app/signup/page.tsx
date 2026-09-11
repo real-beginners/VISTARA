@@ -1,14 +1,71 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { AuthDivider } from "@/components/auth/AuthDivider";
+import { AuthNotice } from "@/components/auth/AuthNotice";
+import { AuthVisual } from "@/components/auth/AuthVisual";
+import { PasswordField } from "@/components/auth/PasswordField";
+import { SocialButtons } from "@/components/auth/SocialButtons";
 import { Logo } from "@/components/layout/Logo";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
 import { Icon } from "@/components/ui/Icon";
+import { Input } from "@/components/ui/Input";
+import { getSupabaseBrowserClient } from "@/lib/supabase";
+import { isUsernameAvailable, signUp } from "@/lib/auth";
+
+function passwordScore(password: string) {
+  return [password.length >= 8, /[A-Z]/.test(password), /\d/.test(password), /[^A-Za-z0-9]/.test(password)].filter(Boolean).length;
+}
 
 export default function SignUpPage() {
+  const router = useRouter();
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [terms, setTerms] = useState(false);
+  const [usernameState, setUsernameState] = useState<"idle" | "checking" | "available" | "taken" | "unknown">("idle");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const configured = Boolean(getSupabaseBrowserClient());
+  const score = passwordScore(password);
+
+  async function checkUsername() {
+    const normalized = username.trim().toLowerCase();
+    if (!/^[a-z0-9_]{3,20}$/.test(normalized)) return setUsernameState("idle");
+    setUsernameState("checking");
+    const available = await isUsernameAvailable(normalized);
+    setUsernameState(available === null ? "unknown" : available ? "available" : "taken");
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError("");
+    if (!fullName.trim() || !username.trim() || !email.trim() || !password || !confirmPassword) return setError("Complete all required fields to continue.");
+    if (!/^[a-z0-9_]{3,20}$/.test(username.trim().toLowerCase())) return setError("Username must be 3–20 characters using lowercase letters, numbers, or underscores.");
+    if (password.length < 8) return setError("Use at least 8 characters for your password.");
+    if (password !== confirmPassword) return setError("Your passwords do not match.");
+    if (!terms) return setError("Please accept the Terms and Privacy Policy to create your account.");
+    setLoading(true);
+    try {
+      const result = await signUp({ fullName: fullName.trim(), username: username.trim().toLowerCase(), email: email.trim().toLowerCase(), password });
+      if (typeof window !== "undefined") window.localStorage.setItem("vistara_pending_email", email.trim().toLowerCase());
+      router.replace(result.needsVerification ? "/verify-email" : "/onboarding");
+    } catch {
+      setError("We couldn't create that account. Check your details and try again.");
+      setLoading(false);
+    }
+  }
+
   return (
-    <main className="grid min-h-screen lg:grid-cols-[1.15fr_0.85fr]">
-      <div className="order-2 flex flex-col bg-canvas px-5 py-6 sm:px-10 lg:order-1 lg:px-20 lg:py-10"><div className="lg:hidden"><Logo /></div><div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center py-12"><p className="eyebrow text-xs font-bold text-coral">Begin the journey</p><h1 className="mt-4 font-display text-4xl tracking-[-0.04em]">Make room for somewhere new.</h1><p className="mt-3 text-sm leading-6 text-muted">Create your VISTARA space and start gathering the pieces of your next trip.</p><form className="mt-9 space-y-5"><Input label="Your name" type="text" placeholder="How should we call you?" autoComplete="name" /><Input label="Email address" type="email" placeholder="you@example.com" autoComplete="email" /><Input label="Create a password" type="password" placeholder="At least 8 characters" autoComplete="new-password" /><Button type="button" fullWidth className="mt-2">Create account <Icon name="arrow-right" size={17} /></Button></form><p className="mt-8 text-center text-sm text-muted">Already have an account? <Link href="/login" className="font-bold text-pine hover:text-coral">Log in</Link></p><p className="mt-12 text-center text-xs leading-5 text-muted/70">Account creation is not connected yet. This page is part of the initial product layout.</p></div></div>
-      <div className="order-1 hidden bg-[#eadccc] p-10 text-ink lg:order-2 lg:flex lg:flex-col lg:justify-between"><div className="flex justify-end"><Logo /></div><div className="mx-auto w-full max-w-sm"><div className="relative h-72 overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#e4a992] via-[#c97d67] to-[#506f68] p-7"><div className="absolute -right-20 -top-16 h-56 w-56 rounded-full border-[28px] border-white/20" /><div className="absolute bottom-6 left-7 right-7 rounded-2xl bg-white/85 p-5 backdrop-blur"><p className="eyebrow text-[10px] font-bold text-coral">Make it yours</p><p className="mt-3 font-display text-2xl leading-tight">The places that stay with you.</p></div></div><p className="mt-6 text-center font-display text-2xl tracking-[-0.03em]">A little planning can make<br />a lot more meaning.</p></div><p className="text-right text-xs text-ink/40">VISTARA · Plan with intention.</p></div>
+    <main className="min-h-screen bg-canvas lg:grid lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="order-2 flex min-h-screen flex-col px-5 py-6 sm:px-10 lg:order-1 lg:px-20 lg:py-10"><div className="lg:hidden"><Logo /></div><div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center py-10"><Link href="/" className="mb-8 inline-flex items-center gap-2 text-xs font-semibold text-muted transition hover:text-pine"><Icon name="arrow-left" size={15} /> Back to Vistara</Link><p className="eyebrow text-xs font-bold text-coral">Create your Vistara</p><h1 className="mt-4 font-display text-4xl tracking-[-0.04em] sm:text-5xl">Your next journey starts here.</h1><p className="mt-4 max-w-sm text-sm leading-6 text-muted">Build a travel space around the people, places, and pace that matter to you.</p><div className="mt-8"><SocialButtons nextPath="/onboarding" /></div><AuthDivider />
+        <form className="space-y-4" onSubmit={handleSubmit}><div className="grid gap-4 sm:grid-cols-2"><Input label="Full name" placeholder="How should we call you?" autoComplete="name" value={fullName} onChange={(event) => setFullName(event.target.value)} /><div><Input label="Username" placeholder="yourname" autoComplete="username" value={username} onChange={(event) => { setUsername(event.target.value.toLowerCase().replace(/[^a-z0-9_]/g, "")); setUsernameState("idle"); }} onBlur={checkUsername} />{usernameState !== "idle" ? <p className={`mt-1.5 text-[11px] font-semibold ${usernameState === "available" ? "text-pine" : usernameState === "taken" ? "text-coral" : "text-muted"}`}>{usernameState === "checking" ? "Checking username…" : usernameState === "available" ? "✓ Username available" : usernameState === "taken" ? "✕ Username already taken" : "We’ll check this when you continue"}</p> : null}</div></div><Input label="Email address" type="email" placeholder="you@example.com" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} /><PasswordField label="Create a password" placeholder="At least 8 characters" autoComplete="new-password" value={password} onChange={(event) => setPassword(event.target.value)} hint="Use a mix of letters, numbers, and symbols." />{password ? <div className="-mt-2 flex gap-1.5" aria-label="Password strength">{[0, 1, 2, 3].map((item) => <span key={item} className={`h-1 flex-1 rounded-full ${item < score ? score < 2 ? "bg-coral" : score < 4 ? "bg-[#c8a15a]" : "bg-pine" : "bg-line"}`} />)}</div> : null}<PasswordField label="Confirm password" placeholder="Re-enter your password" autoComplete="new-password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} /><label className="flex items-start gap-2.5 pt-1 text-xs leading-5 text-muted"><input type="checkbox" checked={terms} onChange={(event) => setTerms(event.target.checked)} className="mt-1 h-4 w-4 shrink-0 rounded border-line accent-pine" /><span>I agree to Vistara&apos;s <a href="#terms" className="font-bold text-pine hover:text-coral">Terms</a> and <a href="#privacy" className="font-bold text-pine hover:text-coral">Privacy Policy</a>.</span></label>{error ? <AuthNotice tone="error">{error}</AuthNotice> : null}<Button type="submit" fullWidth disabled={loading}>{loading ? "Creating your account…" : "Create account"} {!loading ? <Icon name="arrow-right" size={17} /> : null}</Button></form>
+        <p className="mt-7 text-center text-sm text-muted">Already have an account? <Link href="/login" className="font-bold text-pine hover:text-coral">Sign in</Link></p>{!configured ? <p className="mt-7 text-center text-xs leading-5 text-muted/70">Preview build: add Supabase public keys to <code className="rounded bg-moss px-1">.env.local</code> to enable live accounts.</p> : null}</div></div>
+      <AuthVisual mode="signup" />
     </main>
   );
 }
