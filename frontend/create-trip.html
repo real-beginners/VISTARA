@@ -873,11 +873,16 @@
         savedAt: new Date().toISOString()
       };
 
-      // Save to browser localStorage
+      // Save to browser localStorage and navigate upon success
       try {
         localStorage.setItem('vistaraTrip', JSON.stringify(vistaraTrip));
+        // Navigate to planner only after successful save
+        window.location.href = 'planner.html';
+        return;
       } catch (err) {
         console.error('Failed to save trip to localStorage:', err);
+        alert('Could not save your trip to storage. Please check your browser storage settings.');
+        return false;
       }
 
       // Populate Modal with saved data
