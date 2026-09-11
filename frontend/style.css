@@ -1,0 +1,25 @@
+body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0a0d14;
+      color: #f1f5f9;
+      overflow-x: hidden;
+    }
+    .glass-nav {
+      background: rgba(10, 13, 20, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .card-gradient {
+      background: linear-gradient(180deg, rgba(24, 31, 47, 0.75) 0%, rgba(15, 19, 28, 0.9) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .card-gradient:hover {
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+    .badge-glow {
+      box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.25);
+    }
+    .glow-radial {
+      background: radial-gradient(circle 500px at 50% 0%, rgba(16, 185, 129, 0.12), transparent 70%);
+    }

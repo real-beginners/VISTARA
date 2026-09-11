@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vistara — Plan Your Journey Your Way</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+            },
+            dark: {
+              950: '#0a0d14',
+              900: '#0f131c',
+              850: '#131824',
+              800: '#181f2f',
+              700: '#232b3e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen selection:bg-emerald-500 selection:text-white antialiased">
+
+  <!-- 1. NAVBAR -->
+  <header class="sticky top-0 z-50 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <img src="https://lh3.googleusercontent.com/aida/AEtjO1UOnTx0TRd0TMrXumMrsX3124PSZlzIhBay5AWbpTwo2RxhPvklZ3LXIOj036u1kjrhpPHBHo7AjRkcd24VI3DE6aJrrnSTMh16o32rxBwkdw1NRb0rns6SrUPPAfKYBDkjZfGQMdNrbzbA08U6f9Mo_LilOh2TotjK7eEJbtTLqFmiOenKlcvuAgIbIqeINZ8pyChN5KeWF_2lLotrmmC72vhS-dX058FQySNMtzV5OWhvRJvWp0Bjrao" alt="Vistara Logo" class="h-10 w-auto object-contain transition-transform group-hover:scale-[1.02]">
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#home" class="text-emerald-400 font-semibold transition-colors">Home</a>
+        <a href="#how-it-works" class="hover:text-white transition-colors">How It Works</a>
+        <a href="#features" class="hover:text-white transition-colors">Features</a>
+        <a href="#experience-dna" class="hover:text-white transition-colors">Experience DNA</a>
+        <a href="#budget" class="hover:text-white transition-colors">Smart Budget</a>
+      </nav>
+
+      <!-- Right CTAs -->
+      <div class="flex items-center gap-4">
+        <a href="#signin" class="text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 transition-colors">Sign In</a>
+        <a href="#final-cta" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 shadow-lg shadow-emerald-950/40 transition-all transform active:scale-95 border border-emerald-400/30">
+          Plan My Trip
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. HERO SECTION -->
+  <section id="home" class="relative pt-12 pb-24 lg:pt-20 lg:pb-32 overflow-hidden glow-radial">
+    <!-- Atmospheric Background accents -->
+    <div class="absolute -top-40 right-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/3 -left-20 w-80 h-80 bg-teal-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Left Hero Content -->
+        <div class="lg:col-span-6 space-y-8 text-left z-10">
+          <!-- Live tag pill -->
+          <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-semibold tracking-wide">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            Adaptive Travel Copilot 2.0
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
+            Your Journey. <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-200">Your Way.</span>
+          </h1>
+
+          <p class="text-lg sm:text-xl text-slate-300/90 leading-relaxed font-normal max-w-xl">
+            Plan it yourself, or let Vistara's AI build the perfect experience around your time, budget, interests, and travel style.
+          </p>
+
+          <!-- Dual CTA Buttons -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+            <a href="#final-cta" class="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-bold text-white bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 shadow-xl shadow-emerald-950/60 border border-emerald-400/40 transition-all transform hover:-translate-y-0.5 active:scale-95">
+              <span>Plan My Trip</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+            <a href="#features" class="inline-flex items-center justify-center px-7 py-4 rounded-xl text-base font-semibold text-slate-200 bg-slate-800/80 hover:bg-slate-800 hover:text-white border border-slate-700/80 transition-all transform hover:-translate-y-0.5">
+              Explore Experiences
+            </a>
+          </div>
+
+          <!-- Quick Trust stats -->
+          <div class="pt-6 border-t border-slate-800/80 flex items-center gap-6 text-xs text-slate-400 font-medium">
+            <div class="flex items-center gap-2">
+              <span class="text-emerald-400 font-bold text-sm">₹0 Fee</span> during beta
+            </div>
+            <div class="h-3 w-px bg-slate-800"></div>
+            <div class="flex items-center gap-2">
+              <span class="text-emerald-400 font-bold text-sm">30s</span> Itinerary Synthesis
+            </div>
+            <div class="h-3 w-px bg-slate-800"></div>
+            <div class="flex items-center gap-2">
+              <span class="text-emerald-400 font-bold text-sm">100%</span> DIY Flexibility
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Hero Visual with Floating Card -->
+        <div class="lg:col-span-6 relative">
+          <!-- Subtle back glow -->
+          <div class="absolute -inset-1.5 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-3xl blur-xl opacity-75"></div>
+          
+          <div class="relative rounded-2xl overflow-hidden border border-slate-700/70 shadow-2xl bg-dark-900 group">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkDL8Gw7SuS0Jkn_QXZ6Oc3CNZXMbvCuWP0jHLd4P_lkllI8MikvYY7ebf6EXUcO7j2n5ST9nTmLFqNq_nTPDXjC7t0EnNYDvNc_oJjmI2mbswibIqiRWm-S8loftx_0MB8bSB0K-lsOkLmdt12fQcG0erQG6OI5NIjl0Jtt2qODG8ZpGEwWjD2a_wqT2TA2bEsqzHJ-Uf_bNKWlYJc4uCtiR9pwjBIf9ocRvSN_npYHbTRggfP17h" alt="Scenic mountain valley travel destination" class="w-full h-[440px] sm:h-[480px] object-cover object-center transform transition-transform duration-700 group-hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/20 to-transparent"></div>
+
+            <!-- Floating Pill on top right of image -->
+            <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-dark-950/80 backdrop-blur-md border border-slate-700/80 text-xs font-medium text-slate-300 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              Live Destination Telemetry
+            </div>
+
+            <!-- Floating AI Planning Card Overlay (Bottom Left) -->
+            <div class="absolute bottom-6 left-6 right-6 sm:right-auto sm:max-w-md p-4 sm:p-5 rounded-xl bg-dark-900/90 backdrop-blur-xl border border-emerald-500/30 shadow-2xl text-left space-y-3 badge-glow">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                  </div>
+                  <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">AI Synthesizer</span>
+                    <p class="text-xs text-slate-300 font-medium">Planning your perfect day...</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-500/20 text-emerald-300">Live</span>
+              </div>
+
+              <!-- Content Row -->
+              <div class="flex items-center justify-between bg-dark-800/80 p-2.5 rounded-lg border border-slate-700/60 text-xs">
+                <div class="flex items-center gap-2 text-white font-semibold">
+                  <span>Pune</span>
+                  <span class="text-slate-500">•</span>
+                  <span>1 Day</span>
+                </div>
+                <div class="text-emerald-400 font-bold">
+                  ₹2,000 <span class="text-slate-400 text-[10px] font-normal">est.</span>
+                </div>
+              </div>
+
+              <!-- Tags -->
+              <div class="flex items-center gap-2 pt-0.5">
+                <span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 text-[11px] border border-slate-700">🍜 Food</span>
+                <span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 text-[11px] border border-slate-700">📸 Photography</span>
+                <span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 text-[11px] border border-slate-700">🏛️ Culture</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. TRUST / VALUE STRIP -->
+  <section class="border-y border-slate-800/80 bg-dark-900/60 py-8 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
+        
+        <!-- Benefit 1 -->
+        <div class="flex items-center gap-3.5 p-3 rounded-xl hover:bg-slate-800/30 transition-colors">
+          <div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-white">AI-Powered Planning</h4>
+            <p class="text-xs text-slate-400">Contextual & fast</p>
+          </div>
+        </div>
+
+        <!-- Benefit 2 -->
+        <div class="flex items-center gap-3.5 p-3 rounded-xl hover:bg-slate-800/30 transition-colors">
+          <div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-white">Build It Yourself</h4>
+            <p class="text-xs text-slate-400">Full itinerary autonomy</p>
+          </div>
+        </div>
+
+        <!-- Benefit 3 -->
+        <div class="flex items-center gap-3.5 p-3 rounded-xl hover:bg-slate-800/30 transition-colors">
+          <div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-white">Smart Budgeting</h4>
+            <p class="text-xs text-slate-400">Real-time spend pacing</p>
+          </div>
+        </div>
+
+        <!-- Benefit 4 -->
+        <div class="flex items-center gap-3.5 p-3 rounded-xl hover:bg-slate-800/30 transition-colors">
+          <div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-white">Local Experiences</h4>
+            <p class="text-xs text-slate-400">Authentic hidden spots</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. HOW VISTARA WORKS -->
+  <section id="how-it-works" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Heading -->
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider">
+          Effortless Process
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          From Your Idea to Your Journey
+        </h2>
+        <p class="text-slate-400 text-base">
+          Three streamlined steps to turn spontaneous inspiration into a flawless, realistic itinerary.
+        </p>
+      </div>
+
+      <!-- 3-Step Process Flow -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        
+        <!-- Step 1 -->
+        <div class="card-gradient rounded-2xl p-8 relative flex flex-col justify-between transition-all duration-300 hover:-translate-y-1">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-3xl font-extrabold text-emerald-400/90 font-mono">01</span>
+              <div class="w-10 h-10 rounded-xl bg-dark-800 border border-slate-700/60 flex items-center justify-center text-emerald-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold text-white">Tell Us What You Want</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              "Share your destination, time, budget and interests."
+            </p>
+          </div>
+          <div class="pt-6 mt-6 border-t border-slate-800/80 text-xs text-slate-400 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            Multi-variable constraint parsing
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="card-gradient rounded-2xl p-8 relative flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 border-emerald-500/30">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-3xl font-extrabold text-emerald-400 font-mono">02</span>
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold text-white">Build or Let AI Plan</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              "Create your own itinerary or let Vistara generate one."
+            </p>
+          </div>
+          <div class="pt-6 mt-6 border-t border-slate-800/80 text-xs text-slate-400 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            Seamless hybrid autonomy
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="card-gradient rounded-2xl p-8 relative flex flex-col justify-between transition-all duration-300 hover:-translate-y-1">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-3xl font-extrabold text-emerald-400/90 font-mono">03</span>
+              <div class="w-10 h-10 rounded-xl bg-dark-800 border border-slate-700/60 flex items-center justify-center text-emerald-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold text-white">Experience More</h3>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              "Get a practical itinerary built around real places, time and budget."
+            </p>
+          </div>
+          <div class="pt-6 mt-6 border-t border-slate-800/80 text-xs text-slate-400 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            Real-world verified logistics
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. CORE FEATURE SECTION: ONE TRIP. YOUR RULES. -->
+  <section id="features" class="py-24 bg-dark-900/40 relative border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider">
+          Tailored Autonomy
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          One Trip. Your Rules.
+        </h2>
+        <p class="text-slate-400 text-base">
+          Whether you want lightning-fast algorithmic synthesis or hands-on manual curation, Vistara adapts to your workflow.
+        </p>
+      </div>
+
+      <!-- Side-by-Side Cards -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+        
+        <!-- CARD 1: AI PLANNER -->
+        <div class="card-gradient rounded-3xl p-8 sm:p-10 border-emerald-500/30 relative flex flex-col justify-between overflow-hidden group">
+          <!-- Background glow subtle -->
+          <div class="absolute -right-20 -top-20 w-60 h-60 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all"></div>
+
+          <div class="space-y-6 relative z-10">
+            <div class="flex items-center justify-between">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold text-xs uppercase tracking-wider border border-emerald-500/30">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                Autonomous Copilot
+              </div>
+              <span class="text-xs text-slate-400 font-medium">Instant Synthesis</span>
+            </div>
+
+            <div>
+              <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-2">AI PLANNER</h3>
+              <p class="text-slate-300 text-base font-normal">
+                "Let Vistara create your itinerary."
+              </p>
+            </div>
+
+            <!-- Bullet points with checkmarks -->
+            <ul class="space-y-4 pt-2">
+              <li class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0 mt-0.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div>
+                  <span class="text-slate-200 font-semibold text-sm">Personalized recommendations</span>
+                  <p class="text-xs text-slate-400 mt-0.5">Curated around your pacing, dietary habits, and curiosity profile.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0 mt-0.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div>
+                  <span class="text-slate-200 font-semibold text-sm">Time-aware planning</span>
+                  <p class="text-xs text-slate-400 mt-0.5">Calculates transit windows, operating hours, and peak crowd hours.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0 mt-0.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div>
+                  <span class="text-slate-200 font-semibold text-sm">Budget-aware suggestions</span>
+                  <p class="text-xs text-slate-400 mt-0.5">Advises exact ticket costs, transport envelopes, and food forecasts.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0 mt-0.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div>
+                  <span class="text-slate-200 font-semibold text-sm">Experience-based recommendations</span>
+                  <p class="text-xs text-slate-400 mt-0.5">Prioritizes high-affinity venues over generic TripAdvisor tourist traps.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="pt-8 mt-8 border-t border-slate-800 relative z-10">
+            <a href="#final-cta" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 shadow-lg shadow-emerald-950/40 border border-emerald-400/30 transition-all">
+              <span>Try AI Planner</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- CARD 2: DIY PLANNER -->
+        <div class="card-gradient rounded-3xl p-8 sm:p-10 border-slate-700/80 relative flex flex-col justify-between overflow-hidden group">
+          <!-- Background glow subtle -->
+          <div class="absolute -right-20 -top-20 w-60 h-60 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-all"></div>
+
+          <div class="space-y-6 relative z-10">
+            <div class="flex items-center justify-between">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-800 text-slate-200 font-bold text-xs uppercase tracking-wider border border-slate-700">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                Manual Architect
+              </div>
+              <span class="text-xs text-slate-400 font-medium">Full Hands-On</span>
+            </div>
+
+            <div>
+              <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-2">DIY PLANNER</h3>
+              <p class="text-slate-300 text-base font-normal">
+                "You stay in control."
+              </p>
+            </div>
+
+            <!-- Bullet points with checkmarks -->
+            <ul class="space-y-4 pt-2">
+              <li class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-teal-300 shrink-0 mt-0.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div>
+                  <span class="text-slate-200 font-semibold text-sm">Add your own places</span>
+                  <p class="text-xs text-slate-400 mt-0.5">Pin custom cafes, friend recommendations, or niche photography spots.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-teal-300 shrink-0 mt-0.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div>
+                  <span class="text-slate-200 font-semibold text-sm">Arrange activities</span>
+                  <p class="text-xs text-slate-400 mt-0.5">Reorder schedule cards with drag-and-drop timeline rebalancing.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-teal-300 shrink-0 mt-0.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div>
+                  <span class="text-slate-200 font-semibold text-sm">Track expenses</span>
+                  <p class="text-xs text-slate-400 mt-0.5">Manual ledger items with categorized auto-tagging and receipt estimates.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-teal-300 shrink-0 mt-0.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div>
+                  <span class="text-slate-200 font-semibold text-sm">Modify your itinerary</span>
+                  <p class="text-xs text-slate-400 mt-0.5">Zero rigid locks. Tweak dates, swap venues, and export anytime.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="pt-8 mt-8 border-t border-slate-800 relative z-10">
+            <a href="#final-cta" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-slate-200 bg-slate-800 hover:bg-slate-700 hover:text-white border border-slate-700 transition-all">
+              <span>Build My Trip</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 6. EXPERIENCE DNA SECTION -->
+  <section id="experience-dna" class="py-24 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Explanatory Column -->
+        <div class="lg:col-span-5 space-y-6 text-left">
+          <div class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider">
+            Vistara Core Innovation
+          </div>
+          
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+            Travel Based on Who You Are.
+          </h2>
+          
+          <p class="text-slate-300 text-base sm:text-lg leading-relaxed font-normal">
+            "Vistara learns what kind of experiences you enjoy — not just where you want to go."
+          </p>
+
+          <p class="text-slate-400 text-sm leading-relaxed">
+            "Your Experience DNA helps Vistara recommend places and activities that actually match your travel style."
+          </p>
+
+          <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-3 text-xs text-slate-300">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 shrink-0">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <span>Adaptive vector scoring recalculates whenever you save, favorite, or dismiss spots.</span>
+          </div>
+        </div>
+
+        <!-- Right Visualization Card Column -->
+        <div class="lg:col-span-7">
+          <div class="card-gradient rounded-3xl p-6 sm:p-8 border border-emerald-500/25 shadow-2xl relative">
+            
+            <!-- Header inside card -->
+            <div class="flex items-center justify-between pb-6 border-b border-slate-800">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-dark-950 font-black text-sm">
+                  DNA
+                </div>
+                <div>
+                  <h4 class="text-base font-bold text-white">Active Affinity Profile</h4>
+                  <p class="text-xs text-slate-400">Calibrated via 14 subtle micro-choices</p>
+                </div>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-xs font-semibold">
+                High Resonance
+              </span>
+            </div>
+
+            <!-- Preference Percentages Bars -->
+            <div class="space-y-6 pt-6">
+              
+              <!-- Photography: 90% -->
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-sm">
+                  <span class="font-semibold text-slate-200 flex items-center gap-2">
+                    <span class="text-base">📸</span> Photography
+                  </span>
+                  <span class="font-bold text-emerald-400 font-mono text-sm">90%</span>
+                </div>
+                <div class="h-3 w-full bg-dark-800 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
+                  <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-1000" style="width: 90%"></div>
+                </div>
+              </div>
+
+              <!-- Adventure: 80% -->
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-sm">
+                  <span class="font-semibold text-slate-200 flex items-center gap-2">
+                    <span class="text-base">🧗</span> Adventure
+                  </span>
+                  <span class="font-bold text-emerald-400 font-mono text-sm">80%</span>
+                </div>
+                <div class="h-3 w-full bg-dark-800 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
+                  <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-1000" style="width: 80%"></div>
+                </div>
+              </div>
+
+              <!-- Food: 70% -->
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-sm">
+                  <span class="font-semibold text-slate-200 flex items-center gap-2">
+                    <span class="text-base">🍜</span> Food
+                  </span>
+                  <span class="font-bold text-emerald-400 font-mono text-sm">70%</span>
+                </div>
+                <div class="h-3 w-full bg-dark-800 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
+                  <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-1000" style="width: 70%"></div>
+                </div>
+              </div>
+
+              <!-- Relaxation: 50% -->
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-sm">
+                  <span class="font-semibold text-slate-200 flex items-center gap-2">
+                    <span class="text-base">☕</span> Relaxation
+                  </span>
+                  <span class="font-bold text-emerald-400 font-mono text-sm">50%</span>
+                </div>
+                <div class="h-3 w-full bg-dark-800 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
+                  <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-1000" style="width: 50%"></div>
+                </div>
+              </div>
+
+              <!-- Culture: 40% -->
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-sm">
+                  <span class="font-semibold text-slate-200 flex items-center gap-2">
+                    <span class="text-base">🏛️</span> Culture
+                  </span>
+                  <span class="font-bold text-emerald-400 font-mono text-sm">40%</span>
+                </div>
+                <div class="h-3 w-full bg-dark-800 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
+                  <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-1000" style="width: 40%"></div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Recommendation preview snippet -->
+            <div class="mt-8 p-4 rounded-xl bg-dark-800/80 border border-slate-700/60 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">✨</span>
+                <div>
+                  <div class="text-xs font-bold text-white">Suggested Match for You</div>
+                  <div class="text-xs text-slate-400">Sinhagad Fort Sunrise Treks & Rustic Kanda Bhajji</div>
+                </div>
+              </div>
+              <span class="text-xs font-semibold text-emerald-400">96% Fit</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 7. SMART BUDGET SECTION -->
+  <section id="budget" class="py-24 bg-dark-900/40 relative border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left: The Realistic Trip Budget Card -->
+        <div class="lg:col-span-6 order-2 lg:order-1">
+          <div class="card-gradient rounded-3xl p-6 sm:p-8 border border-slate-700/80 shadow-2xl relative">
+            
+            <!-- Card Header -->
+            <div class="flex items-start justify-between pb-6 border-b border-slate-800">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Simulated Ledger</span>
+                <h3 class="text-xl font-bold text-white mt-1">Trip Budget</h3>
+              </div>
+              <div class="text-right">
+                <span class="text-xs text-slate-400 block font-medium">Total Envelope</span>
+                <span class="text-2xl sm:text-3xl font-extrabold text-white font-mono">₹10,000</span>
+              </div>
+            </div>
+
+            <!-- Expense Breakdowns with clean tabular layout -->
+            <div class="py-6 space-y-3.5">
+              
+              <div class="flex items-center justify-between p-3 rounded-xl bg-dark-800/60 border border-slate-700/50">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center text-sm font-bold">🚆</span>
+                  <span class="text-sm font-medium text-slate-200">Transport</span>
+                </div>
+                <span class="text-sm font-bold text-white font-mono">₹2,000</span>
+              </div>
+
+              <div class="flex items-center justify-between p-3 rounded-xl bg-dark-800/60 border border-slate-700/50">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-sm font-bold">🏨</span>
+                  <span class="text-sm font-medium text-slate-200">Stay</span>
+                </div>
+                <span class="text-sm font-bold text-white font-mono">₹3,500</span>
+              </div>
+
+              <div class="flex items-center justify-between p-3 rounded-xl bg-dark-800/60 border border-slate-700/50">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm font-bold">🍲</span>
+                  <span class="text-sm font-medium text-slate-200">Food</span>
+                </div>
+                <span class="text-sm font-bold text-white font-mono">₹1,500</span>
+              </div>
+
+              <div class="flex items-center justify-between p-3 rounded-xl bg-dark-800/60 border border-slate-700/50">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center text-sm font-bold">🎟️</span>
+                  <span class="text-sm font-medium text-slate-200">Activities</span>
+                </div>
+                <span class="text-sm font-bold text-white font-mono">₹1,000</span>
+              </div>
+
+            </div>
+
+            <!-- Remaining balance highlight -->
+            <div class="pt-4 border-t border-slate-800 flex items-center justify-between p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25">
+              <div class="flex items-center gap-2.5">
+                <span class="relative flex h-2.5 w-2.5">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <span class="text-sm font-bold text-emerald-300">Remaining</span>
+              </div>
+              <span class="text-xl font-black text-emerald-400 font-mono">₹2,000</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Text & Context Column -->
+        <div class="lg:col-span-6 space-y-6 text-left order-1 lg:order-2">
+          <div class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider">
+            Zero-Surprise Finances
+          </div>
+
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+            Know Where Your Money Goes.
+          </h2>
+
+          <p class="text-slate-300 text-lg leading-relaxed font-normal">
+            "Plan experiences without losing track of your budget."
+          </p>
+
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Vistara continuously balances real travel prices with your comfort zones. Avoid overspending on unexpected transit or tour packages with pre-allocated cost buffers and smart live adjustments.
+          </p>
+
+          <div class="grid grid-cols-2 gap-4 pt-2">
+            <div class="p-4 rounded-xl bg-dark-800/80 border border-slate-800">
+              <div class="text-emerald-400 font-bold text-lg font-mono">₹0</div>
+              <div class="text-xs text-slate-400 mt-1">Unexpected Hidden Surcharges</div>
+            </div>
+            <div class="p-4 rounded-xl bg-dark-800/80 border border-slate-800">
+              <div class="text-emerald-400 font-bold text-lg font-mono">100%</div>
+              <div class="text-xs text-slate-400 mt-1">Real-Time Currency Precision</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 8. FINAL CTA -->
+  <section id="final-cta" class="py-24 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      
+      <!-- Container card -->
+      <div class="card-gradient rounded-3xl p-10 sm:p-16 border border-emerald-500/30 shadow-2xl relative overflow-hidden">
+        <!-- Glow accents -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-2xl mx-auto space-y-6 relative z-10">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-wider">
+            Ready For Your Next Journey?
+          </div>
+
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+            Your Next Experience Starts Here.
+          </h2>
+
+          <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+            "Tell Vistara where you're going. We'll help you figure out what to do."
+          </p>
+
+          <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="#home" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 shadow-xl shadow-emerald-950/60 border border-emerald-400/40 transition-all transform hover:-translate-y-0.5 active:scale-95">
+              <span>Start Planning</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+          </div>
+
+          <p class="text-xs text-slate-400 pt-2">
+            No credit card required • Instant AI or DIY itinerary creation
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 9. FOOTER -->
+  <footer class="border-t border-slate-800 bg-dark-950 py-12 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center justify-between pb-8 border-b border-slate-800/80">
+        
+        <!-- Left: Logo & Description -->
+        <div class="md:col-span-6 space-y-3">
+          <a href="#" class="inline-block">
+            <img src="https://lh3.googleusercontent.com/aida/AEtjO1UOnTx0TRd0TMrXumMrsX3124PSZlzIhBay5AWbpTwo2RxhPvklZ3LXIOj036u1kjrhpPHBHo7AjRkcd24VI3DE6aJrrnSTMh16o32rxBwkdw1NRb0rns6SrUPPAfKYBDkjZfGQMdNrbzbA08U6f9Mo_LilOh2TotjK7eEJbtTLqFmiOenKlcvuAgIbIqeINZ8pyChN5KeWF_2lLotrmmC72vhS-dX058FQySNMtzV5OWhvRJvWp0Bjrao" alt="Vistara Logo" class="h-9 w-auto object-contain">
+          </a>
+          <p class="text-sm text-slate-400 max-w-sm leading-relaxed">
+            "AI-powered travel and local experiences."
+          </p>
+          <div class="pt-1">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+              Built for HackCelestial 3.0
+            </span>
+          </div>
+        </div>
+
+        <!-- Right: Links -->
+        <div class="md:col-span-6 flex flex-wrap md:justify-end gap-x-8 gap-y-3 text-sm font-medium text-slate-300">
+          <a href="#features" class="hover:text-emerald-400 transition-colors">Product</a>
+          <a href="#features" class="hover:text-emerald-400 transition-colors">Features</a>
+          <a href="#how-it-works" class="hover:text-emerald-400 transition-colors">How It Works</a>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition-colors">GitHub</a>
+          <a href="#contact" class="hover:text-emerald-400 transition-colors">Contact</a>
+        </div>
+
+      </div>
+
+      <!-- Bottom copyright notice -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
+        <p>© 2025 Vistara Technologies. All rights reserved.</p>
+        <p class="text-slate-400">Plan Your Journey Your Way — With AI by Your Side.</p>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+</html>
