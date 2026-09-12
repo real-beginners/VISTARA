@@ -88,3 +88,36 @@ export async function getBackendTrip(tripId: string): Promise<BackendTrip> {
 
   return res.json();
 }
+
+export interface AiTripSuggestionsResponse {
+  tripId: string;
+  destination: string;
+  suggestions: string;
+}
+
+/**
+ * Call POST /api/ai/trip-suggestions with the authenticated user's ID token.
+ * Returns Gemini-generated activity suggestions for the given trip.
+ */
+export async function getAiTripSuggestions(tripId: string): Promise<AiTripSuggestionsResponse> {
+  const token = await getAuthToken();
+  if (!token) {
+    throw new Error("Authentication required. Please sign in to get AI suggestions.");
+  }
+
+  const res = await fetch(`${API_BASE_URL}/api/ai/trip-suggestions`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ tripId }),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.message || `Failed to get AI suggestions (${res.status})`);
+  }
+
+  return res.json();
+}

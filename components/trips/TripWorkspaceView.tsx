@@ -9,6 +9,8 @@ import { Icon } from "@/components/ui/Icon";
 import { MemberAvatar } from "./MemberAvatar";
 import { MemberDisplay } from "./MemberDisplay";
 import { InviteFriendsModal } from "./InviteFriendsModal";
+import { getAiTripSuggestions } from "@/lib/api";
+import { TripMapSection } from "./TripMapSection";
 import {
   INITIAL_SAMPLE_TRIP,
   type MockTripDetail,
@@ -16,7 +18,7 @@ import {
   type MockTripMember,
 } from "@/lib/mockTripData";
 
-type WorkspaceTab = "itinerary" | "chat" | "ai";
+type WorkspaceTab = "itinerary" | "chat" | "ai" | "map";
 
 export function TripWorkspaceView({
   tripId,
@@ -36,6 +38,29 @@ export function TripWorkspaceView({
   const [activeTab, setActiveTab] = useState<WorkspaceTab>("itinerary");
   const [isInviteOpen, setIsInviteOpen] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
+
+  // AI Co-Planner state
+  const [aiSuggestions, setAiSuggestions] = useState<string | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+
+  const handleFetchAiSuggestions = async () => {
+    if (!tripId || tripId === "sample-trip") {
+      setAiError("AI suggestions are only available for real trips, not the sample workspace.");
+      return;
+    }
+    setAiLoading(true);
+    setAiError(null);
+    try {
+      const result = await getAiTripSuggestions(tripId);
+      setAiSuggestions(result.suggestions);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to fetch AI suggestions.";
+      setAiError(msg);
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   // New activity form state for local planning demonstration
   const [showAddActivity, setShowAddActivity] = useState(false);
@@ -219,9 +244,18 @@ export function TripWorkspaceView({
             }`}
           >
             <Icon name="wand" size={16} /> AI Co-Planner
-            <span className="rounded-full bg-coral-soft px-2 py-0.5 text-[9px] font-bold text-coral">
-              Upcoming
-            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab("map")}
+            className={`relative flex items-center gap-2 border-b-2 px-5 py-3 text-sm font-bold transition ${
+              activeTab === "map"
+                ? "border-pine text-pine"
+                : "border-transparent text-muted hover:text-ink"
+            }`}
+          >
+            <Icon name="map" size={16} /> Destination Map
           </button>
         </div>
 
@@ -420,52 +454,149 @@ export function TripWorkspaceView({
               </div>
             )}
 
-            {/* 3. AI ASSISTANT PLACEHOLDER */}
+            {/* 3. AI CO-PLANNER */}
             {activeTab === "ai" && (
               <div className="space-y-4 animate-in fade-in duration-150">
-                <Card padding="lg" className="border-line text-center">
-                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-coral-soft text-coral">
-                    <Icon name="wand" size={26} />
-                  </div>
-
-                  <span className="mt-4 inline-block rounded-full bg-coral-soft px-3 py-1 text-[10px] font-bold tracking-wider uppercase text-coral">
-                    Feature Placeholder · Coming Soon
-                  </span>
-
-                  <h2 className="mt-3 font-display text-2xl tracking-[-0.03em] text-ink sm:text-3xl">
-                    Vistara AI Co-Planner
-                  </h2>
-
-                  <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-muted">
-                    Your dedicated AI travel assistant for this room. When enabled, it will automatically optimize itineraries, resolve group schedule conflicts, suggest route timings, and balance budgets.
-                  </p>
-
-                  <div className="mx-auto mt-8 grid max-w-lg gap-3 text-left sm:grid-cols-2">
-                    <div className="rounded-xl border border-line bg-canvas/60 p-3.5">
-                      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-moss text-pine">
-                        <Icon name="sparkle" size={14} />
-                      </span>
-                      <p className="mt-2 text-xs font-bold text-ink">Route Optimization</p>
-                      <p className="mt-1 text-[11px] leading-4 text-muted">
-                        Minimizes driving time through the ghats between stops.
-                      </p>
+                {/* Header card */}
+                <Card padding="none" className="overflow-hidden">
+                  <div className="flex flex-wrap items-center justify-between border-b border-line p-5 sm:p-6">
+                    <div>
+                      <p className="eyebrow text-[10px] font-bold text-coral">Powered by Gemini</p>
+                      <h2 className="mt-1 font-display text-2xl tracking-[-0.02em] text-ink">
+                        AI Activity Suggestions
+                      </h2>
                     </div>
 
-                    <div className="rounded-xl border border-line bg-canvas/60 p-3.5">
-                      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-sand text-[#8b6f43]">
-                        <Icon name="wallet" size={14} />
-                      </span>
-                      <p className="mt-2 text-xs font-bold text-ink">Budget Splitter</p>
-                      <p className="mt-1 text-[11px] leading-4 text-muted">
-                        Keeps group spending within the {trip.budget} target.
-                      </p>
-                    </div>
+                    <Button
+                      variant="primary"
+                      onClick={handleFetchAiSuggestions}
+                      disabled={aiLoading}
+                      className="shadow-sm"
+                    >
+                      {aiLoading ? (
+                        <>
+                          <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                          Generating…
+                        </>
+                      ) : (
+                        <>
+                          <Icon name="sparkle" size={16} />
+                          {aiSuggestions ? "Regenerate" : "Get AI Suggestions"}
+                        </>
+                      )}
+                    </Button>
                   </div>
 
-                  <p className="mt-6 text-xs text-muted/80">
-                    AI generation functionality will be integrated once the backend trip model is live.
-                  </p>
+                  {/* Loading state */}
+                  {aiLoading && (
+                    <div className="flex flex-col items-center justify-center gap-3 px-6 py-12 text-center animate-in fade-in">
+                      <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-coral-soft text-coral">
+                        <Icon name="wand" size={22} />
+                      </span>
+                      <p className="text-sm font-semibold text-ink">Vistara AI is thinking…</p>
+                      <p className="text-xs text-muted">
+                        Crafting tailored suggestions for {trip.destination}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Error state */}
+                  {!aiLoading && aiError && (
+                    <div className="flex items-start gap-3 border-b border-line bg-coral-soft/30 px-6 py-4 animate-in fade-in">
+                      <Icon name="info" size={18} className="mt-0.5 shrink-0 text-coral" />
+                      <div>
+                        <p className="text-sm font-semibold text-coral">Could not get suggestions</p>
+                        <p className="mt-0.5 text-xs text-muted">{aiError}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Suggestions content */}
+                  {!aiLoading && aiSuggestions && (
+                    <div className="px-5 py-5 sm:px-6 animate-in fade-in duration-200">
+                      <div className="prose prose-sm max-w-none">
+                        {aiSuggestions
+                          .split(/\n{2,}/)
+                          .filter((para) => para.trim())
+                          .map((para, i) => {
+                            const trimmed = para.trim();
+                            // Render markdown-style headings (###, **text**) as styled blocks
+                            if (trimmed.startsWith("###")) {
+                              return (
+                                <h3
+                                  key={i}
+                                  className="mt-6 first:mt-0 font-display text-lg font-semibold text-ink"
+                                >
+                                  {trimmed.replace(/^###\s*/, "")}
+                                </h3>
+                              );
+                            }
+                            if (trimmed.startsWith("**") && trimmed.endsWith("**")) {
+                              return (
+                                <p key={i} className="mt-3 font-semibold text-ink">
+                                  {trimmed.replace(/^\*\*|\*\*$/g, "")}
+                                </p>
+                              );
+                            }
+                            if (trimmed.startsWith("*   ") || trimmed.startsWith("-   ") || trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
+                              return (
+                                <div key={i} className="mt-2 flex items-start gap-2 text-sm text-muted">
+                                  <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-coral" />
+                                  <span
+                                    dangerouslySetInnerHTML={{
+                                      __html: trimmed
+                                        .replace(/^[*-]\s+/, "")
+                                        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"),
+                                    }}
+                                  />
+                                </div>
+                              );
+                            }
+                            return (
+                              <p
+                                key={i}
+                                className="mt-3 text-sm leading-6 text-muted"
+                                dangerouslySetInnerHTML={{
+                                  __html: trimmed.replace(
+                                    /\*\*(.+?)\*\*/g,
+                                    "<strong class='text-ink'>$1</strong>"
+                                  ),
+                                }}
+                              />
+                            );
+                          })}
+                      </div>
+
+                      <div className="mt-6 flex items-center gap-2 border-t border-line pt-4 text-[10px] text-muted/70">
+                        <Icon name="sparkle" size={12} />
+                        Generated by Gemini for {trip.destination} · Results may vary. Verify details before booking.
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Empty state — before first click */}
+                  {!aiLoading && !aiSuggestions && !aiError && (
+                    <div className="flex flex-col items-center gap-3 px-6 py-10 text-center">
+                      <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-moss text-pine">
+                        <Icon name="wand" size={22} />
+                      </span>
+                      <p className="text-sm font-medium text-ink">
+                        Ready to inspire your {trip.destination} adventure
+                      </p>
+                      <p className="max-w-xs text-xs leading-5 text-muted">
+                        Click <strong>Get AI Suggestions</strong> and Gemini will generate tailored
+                        activity ideas based on your trip destination, dates, budget, and group size.
+                      </p>
+                    </div>
+                  )}
                 </Card>
+              </div>
+            )}
+
+            {/* 4. DESTINATION MAP */}
+            {activeTab === "map" && (
+              <div className="animate-in fade-in duration-150">
+                <TripMapSection destination={trip.destination} />
               </div>
             )}
           </div>
