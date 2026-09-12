@@ -121,3 +121,35 @@ export async function getAiTripSuggestions(tripId: string): Promise<AiTripSugges
 
   return res.json();
 }
+
+export interface DriveFolderResponse {
+  folderId: string;
+  folderUrl: string;
+}
+
+/**
+ * Initializes a Google Drive folder for the trip.
+ */
+export async function initTripDriveFolder(tripId: string, accessToken: string): Promise<DriveFolderResponse> {
+  const token = await getAuthToken();
+  if (!token) {
+    throw new Error("Authentication required.");
+  }
+
+  const res = await fetch(`${API_BASE_URL}/api/drive/init-folder`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ tripId, accessToken }),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.message || `Failed to initialize Drive folder (${res.status})`);
+  }
+
+  return res.json();
+}
+

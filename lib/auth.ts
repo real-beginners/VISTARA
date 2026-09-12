@@ -149,6 +149,31 @@ export async function signInWithGoogle(_nextPath = "/onboarding"): Promise<User>
   }
 }
 
+/**
+ * Triggers a Google OAuth popup to request Drive permissions.
+ * Returns the OAuth access token to be passed to the backend.
+ */
+export async function authorizeGoogleDrive(): Promise<string> {
+  const auth = getFirebaseAuth();
+  if (!auth) {
+    throw new Error("Firebase is not configured.");
+  }
+
+  try {
+    const provider = new GoogleAuthProvider();
+    provider.addScope("https://www.googleapis.com/auth/drive.file");
+    const result = await signInWithPopup(auth, provider);
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    if (!credential || !credential.accessToken) {
+      throw new Error("Failed to retrieve Google OAuth access token.");
+    }
+    return credential.accessToken;
+  } catch (err) {
+    throw new Error(getErrorMessage(err));
+  }
+}
+
+
 export async function sendPasswordReset(email: string): Promise<void> {
   const auth = getFirebaseAuth();
   if (!auth) {

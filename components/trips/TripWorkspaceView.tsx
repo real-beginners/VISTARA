@@ -11,6 +11,7 @@ import { MemberDisplay } from "./MemberDisplay";
 import { InviteFriendsModal } from "./InviteFriendsModal";
 import { getAiTripSuggestions } from "@/lib/api";
 import { TripMapSection } from "./TripMapSection";
+import { TripPhotosSection } from "./TripPhotosSection";
 import {
   INITIAL_SAMPLE_TRIP,
   type MockTripDetail,
@@ -18,7 +19,7 @@ import {
   type MockTripMember,
 } from "@/lib/mockTripData";
 
-type WorkspaceTab = "itinerary" | "chat" | "ai" | "map";
+type WorkspaceTab = "itinerary" | "chat" | "ai" | "map" | "photos";
 
 export function TripWorkspaceView({
   tripId,
@@ -256,6 +257,18 @@ export function TripWorkspaceView({
             }`}
           >
             <Icon name="map" size={16} /> Destination Map
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab("photos")}
+            className={`relative flex items-center gap-2 border-b-2 px-5 py-3 text-sm font-bold transition ${
+              activeTab === "photos"
+                ? "border-pine text-pine"
+                : "border-transparent text-muted hover:text-ink"
+            }`}
+          >
+            <Icon name="image" size={16} /> Trip Photos
           </button>
         </div>
 
@@ -597,6 +610,13 @@ export function TripWorkspaceView({
             {activeTab === "map" && (
               <div className="animate-in fade-in duration-150">
                 <TripMapSection destination={trip.destination} />
+              </div>
+            )}
+
+            {/* 5. TRIP PHOTOS */}
+            {activeTab === "photos" && (
+              <div className="animate-in fade-in duration-150">
+                <TripPhotosSection tripId={tripId!} initialFolderUrl={trip.driveFolderUrl} />
               </div>
             )}
           </div>

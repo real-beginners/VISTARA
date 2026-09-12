@@ -48,6 +48,7 @@ export type MockTripDetail = {
     time?: string;
     tag?: string;
   }[];
+  driveFolderUrl?: string;
 };
 
 export const INITIAL_SAMPLE_TRIP: MockTripDetail = {

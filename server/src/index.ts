@@ -92,10 +92,13 @@ app.use("/api/trips", tripRoutes);
 // Trip invitation routes: GET /api/trip-invitations, POST /api/trip-invitations/:invitationId/accept, POST /api/trip-invitations/:invitationId/decline
 app.use("/api/trip-invitations", invitationRoutes);
 
+import driveRoutes from "./routes/driveRoutes";
+
 // AI test route: POST /api/ai/test
 app.use("/api/ai", aiRoutes);
 
-
+// Drive routes
+app.use("/api/drive", driveRoutes);
 
 // Start listening
 app.listen(PORT, () => {

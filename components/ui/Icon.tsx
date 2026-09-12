@@ -6,7 +6,8 @@ export type IconName =
   | "compass" | "edit" | "eye" | "eye-off" | "globe" | "heart" | "home" | "info"
   | "lock" | "logout" | "mail" | "map" | "map-pin" | "menu" | "message" | "more"
   | "navigation" | "plus" | "search" | "settings" | "sparkle" | "sliders" | "star" | "sun"
-  | "user-plus" | "users" | "wallet" | "wand" | "x" | "google";
+  | "user-plus" | "users" | "wallet" | "wand" | "x" | "google"
+  | "image" | "folder" | "external-link";
 
 type IconProps = SVGProps<SVGSVGElement> & { name: IconName; size?: number };
 
@@ -68,6 +69,10 @@ export function Icon({ name, size = 20, className, ...props }: IconProps) {
     case "wand": return <svg {...common}><path d="m15 4 5 5M13 6l5 5M4 20l9.8-9.8" /><path d="M5 4v4M3 6h4M19 16v4M17 18h4" /></svg>;
     case "x": return <svg {...common}><path d="m6 6 12 12M18 6 6 18" /></svg>;
     case "google": return <svg {...common}><path d="M21 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.1a4.4 4.4 0 0 1-1.9 2.9v2.4h3.1c1.8-1.7 2.7-4.1 2.7-7.1Z" fill="currentColor" stroke="none" /><path d="M12 21c2.6 0 4.8-.9 6.3-2.5l-3.1-2.4c-.9.6-1.9.9-3.2.9-2.5 0-4.6-1.7-5.4-4H3.4v2.5A9.5 9.5 0 0 0 12 21Z" fill="currentColor" stroke="none" opacity=".75" /><path d="M6.6 13a5.7 5.7 0 0 1 0-3.6V6.9H3.4a9.5 9.5 0 0 0 0 8.6L6.6 13Z" fill="currentColor" stroke="none" opacity=".55" /><path d="M12 5.4c1.4 0 2.7.5 3.7 1.5l2.8-2.8C16.8 2.5 14.6 1.5 12 1.5a9.5 9.5 0 0 0-8.6 5.4L6.6 9.4c.8-2.4 2.9-4 5.4-4Z" fill="currentColor" stroke="none" opacity=".9" /></svg>;
+    case "image": return <svg {...common}><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg>;
+    case "folder": return <svg {...common}><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" /></svg>;
+    case "external-link": return <svg {...common}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>;
     default: return null;
   }
 }
+

@@ -19,6 +19,8 @@ export interface TripDocument {
   createdAt: string | null;
   updatedAt: string | null;
   members?: TripMember[];
+  driveFolderId?: string;
+  driveFolderUrl?: string;
 }
 
 export interface CreateTripInput {
@@ -219,6 +221,29 @@ export async function getTripById(
       createdAt: formatTimestamp(tripData.createdAt),
       updatedAt: formatTimestamp(tripData.updatedAt),
       members,
+      driveFolderId: tripData.driveFolderId,
+      driveFolderUrl: tripData.driveFolderUrl,
     },
   };
+}
+
+/**
+ * Updates a trip with its associated Google Drive folder information.
+ */
+export async function updateTripDriveFolder(
+  tripId: string,
+  driveFolderId: string,
+  driveFolderUrl: string
+): Promise<void> {
+  const db = getFirestoreDb();
+  if (!db) {
+    throw new Error("Firestore database is not available.");
+  }
+
+  const tripRef = db.collection(TRIPS_COLLECTION).doc(tripId);
+  await tripRef.update({
+    driveFolderId,
+    driveFolderUrl,
+    updatedAt: FieldValue.serverTimestamp(),
+  });
 }
