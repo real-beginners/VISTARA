@@ -247,3 +247,69 @@ export async function updateTripDriveFolder(
     updatedAt: FieldValue.serverTimestamp(),
   });
 }
+
+export interface TripMessage {
+  id: string;
+  senderId: string;
+  senderName: string;
+  text: string;
+  createdAt: string;
+}
+
+/**
+ * Sends a message in the trip's group chat.
+ */
+export async function sendTripMessage(
+  tripId: string,
+  senderId: string,
+  senderName: string,
+  text: string
+): Promise<TripMessage> {
+  const db = getFirestoreDb();
+  if (!db) {
+    throw new Error("Firestore database is not available.");
+  }
+
+  const messagesRef = db.collection(TRIPS_COLLECTION).doc(tripId).collection("messages");
+  const newMessageRef = messagesRef.doc();
+  const now = FieldValue.serverTimestamp();
+
+  const messageData = {
+    id: newMessageRef.id,
+    senderId,
+    senderName,
+    text: text.trim(),
+    createdAt: now,
+  };
+
+  await newMessageRef.set(messageData);
+
+  return {
+    ...messageData,
+    createdAt: new Date().toISOString(), // Best approximation before fetching
+  };
+}
+
+/**
+ * Gets all messages for a trip, ordered by creation time.
+ */
+export async function getTripMessages(tripId: string): Promise<TripMessage[]> {
+  const db = getFirestoreDb();
+  if (!db) {
+    throw new Error("Firestore database is not available.");
+  }
+
+  const messagesRef = db.collection(TRIPS_COLLECTION).doc(tripId).collection("messages");
+  const snapshot = await messagesRef.orderBy("createdAt", "asc").get();
+
+  return snapshot.docs.map(doc => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      senderId: data.senderId,
+      senderName: data.senderName,
+      text: data.text,
+      createdAt: formatTimestamp(data.createdAt) || new Date().toISOString(),
+    };
+  });
+}

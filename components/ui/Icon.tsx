@@ -7,7 +7,7 @@ export type IconName =
   | "lock" | "logout" | "mail" | "map" | "map-pin" | "menu" | "message" | "more"
   | "navigation" | "plus" | "search" | "settings" | "sparkle" | "sliders" | "star" | "sun"
   | "user-plus" | "users" | "wallet" | "wand" | "x" | "google"
-  | "image" | "folder" | "external-link";
+  | "image" | "folder" | "external-link" | "upload";
 
 type IconProps = SVGProps<SVGSVGElement> & { name: IconName; size?: number };
 
@@ -72,6 +72,7 @@ export function Icon({ name, size = 20, className, ...props }: IconProps) {
     case "image": return <svg {...common}><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg>;
     case "folder": return <svg {...common}><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" /></svg>;
     case "external-link": return <svg {...common}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>;
+    case "upload": return <svg {...common}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>;
     default: return null;
   }
 }

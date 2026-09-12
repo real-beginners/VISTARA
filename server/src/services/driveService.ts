@@ -46,3 +46,44 @@ export async function createDriveFolder(
     throw new Error(`Failed to create Google Drive folder: ${error.message}`);
   }
 }
+
+import { Readable } from "stream";
+
+export async function uploadFileToDrive(
+  accessToken: string,
+  folderId: string,
+  fileName: string,
+  mimeType: string,
+  fileBuffer: Buffer
+): Promise<{ id: string; url: string }> {
+  const auth = new google.auth.OAuth2();
+  auth.setCredentials({ access_token: accessToken });
+
+  const drive = google.drive({ version: "v3", auth });
+
+  const fileMetadata = {
+    name: fileName,
+    parents: [folderId],
+  };
+
+  const media = {
+    mimeType: mimeType,
+    body: Readable.from(fileBuffer),
+  };
+
+  try {
+    const file = await drive.files.create({
+      requestBody: fileMetadata,
+      media: media,
+      fields: "id, webViewLink",
+    });
+
+    return {
+      id: file.data.id!,
+      url: file.data.webViewLink!,
+    };
+  } catch (error: any) {
+    console.error("[Drive API Upload Error]", error.message);
+    throw new Error(`Failed to upload file to Google Drive: ${error.message}`);
+  }
+}

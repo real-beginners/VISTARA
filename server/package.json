@@ -9,11 +9,13 @@
   },
   "dependencies": {
     "@google/genai": "^2.22.0",
+    "@types/multer": "^2.2.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "firebase-admin": "^13.1.0",
-    "googleapis": "^180.0.0"
+    "googleapis": "^180.0.0",
+    "multer": "^2.3.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

@@ -240,4 +240,97 @@ router.post("/:tripId/invitations", async (req: Request, res: Response): Promise
   }
 });
 
+/**
+ * GET /api/trips/:tripId/messages
+ * Get all messages for a trip. Only accessible to trip members.
+ */
+router.get("/:tripId/messages", async (req: Request, res: Response): Promise<void> => {
+  const uid = req.user?.uid;
+  if (!uid) {
+    res.status(401).json({ error: "Unauthorized", message: "User identity missing." });
+    return;
+  }
+
+  const { tripId } = req.params;
+  if (!tripId || typeof tripId !== "string") {
+    res.status(400).json({ error: "Bad Request", message: "Invalid trip ID parameter." });
+    return;
+  }
+
+  try {
+    const { isMember, tripExists } = await getTripById(tripId, uid);
+
+    if (!tripExists) {
+      res.status(404).json({ error: "Not Found", message: "Trip not found." });
+      return;
+    }
+
+    if (!isMember) {
+      res.status(403).json({ error: "Forbidden", message: "You are not a member of this trip." });
+      return;
+    }
+
+    const { getTripMessages } = await import("../services/tripService");
+    const messages = await getTripMessages(tripId);
+    res.json(messages);
+  } catch (error) {
+    console.error("[Trips API] Error fetching messages:", error);
+    res.status(500).json({ error: "Internal Server Error", message: "Failed to fetch messages." });
+  }
+});
+
+/**
+ * POST /api/trips/:tripId/messages
+ * Send a message in a trip. Only accessible to trip members.
+ */
+router.post("/:tripId/messages", async (req: Request, res: Response): Promise<void> => {
+  const uid = req.user?.uid;
+  if (!uid) {
+    res.status(401).json({ error: "Unauthorized", message: "User identity missing." });
+    return;
+  }
+
+  const { tripId } = req.params;
+  if (!tripId || typeof tripId !== "string") {
+    res.status(400).json({ error: "Bad Request", message: "Invalid trip ID parameter." });
+    return;
+  }
+
+  const { text } = req.body || {};
+  if (!text || typeof text !== "string" || !text.trim()) {
+    res.status(400).json({ error: "Bad Request", message: "Message text is required and cannot be empty." });
+    return;
+  }
+
+  if (text.length > 2000) {
+    res.status(400).json({ error: "Bad Request", message: "Message is too long." });
+    return;
+  }
+
+  try {
+    const { isMember, tripExists } = await getTripById(tripId, uid);
+
+    if (!tripExists) {
+      res.status(404).json({ error: "Not Found", message: "Trip not found." });
+      return;
+    }
+
+    if (!isMember) {
+      res.status(403).json({ error: "Forbidden", message: "You are not a member of this trip." });
+      return;
+    }
+
+    const { sendTripMessage } = await import("../services/tripService");
+    const { getAuth } = await import("firebase-admin/auth");
+    const userRecord = await getAuth().getUser(uid).catch(() => null);
+    const senderName = userRecord?.displayName || "Unknown User";
+
+    const message = await sendTripMessage(tripId, uid, senderName, text);
+    res.status(201).json(message);
+  } catch (error) {
+    console.error("[Trips API] Error sending message:", error);
+    res.status(500).json({ error: "Internal Server Error", message: "Failed to send message." });
+  }
+});
+
 export default router;

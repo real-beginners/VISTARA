@@ -153,3 +153,86 @@ export async function initTripDriveFolder(tripId: string, accessToken: string): 
   return res.json();
 }
 
+export interface UploadPhotoResponse {
+  fileName: string;
+  fileUrl: string;
+  fileId: string;
+}
+
+/**
+ * Uploads a photo to the initialized Google Drive folder for the trip.
+ */
+export async function uploadTripPhoto(
+  tripId: string,
+  file: File,
+  accessToken: string
+): Promise<UploadPhotoResponse> {
+  const token = await getAuthToken();
+  if (!token) {
+    throw new Error("Authentication required.");
+  }
+
+  const formData = new FormData();
+  formData.append("tripId", tripId);
+  formData.append("accessToken", accessToken);
+  formData.append("file", file);
+
+  const res = await fetch(`${API_BASE_URL}/api/drive/upload`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      // Note: do not set Content-Type header manually for FormData, browser will set it with boundary
+    },
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.message || `Failed to upload photo (${res.status})`);
+  }
+
+  return res.json();
+}
+
+export interface TripMessage {
+  id: string;
+  senderId: string;
+  senderName: string;
+  text: string;
+  createdAt: string;
+}
+
+export async function getTripMessages(tripId: string): Promise<TripMessage[]> {
+  const token = await getAuthToken();
+  if (!token) throw new Error("Authentication required.");
+
+  const res = await fetch(`${API_BASE_URL}/api/trips/${tripId}/messages`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch messages (${res.status})`);
+  }
+
+  return res.json();
+}
+
+export async function sendTripMessage(tripId: string, text: string): Promise<TripMessage> {
+  const token = await getAuthToken();
+  if (!token) throw new Error("Authentication required.");
+
+  const res = await fetch(`${API_BASE_URL}/api/trips/${tripId}/messages`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ text }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to send message (${res.status})`);
+  }
+
+  return res.json();
+}

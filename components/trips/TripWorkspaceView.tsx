@@ -12,6 +12,7 @@ import { InviteFriendsModal } from "./InviteFriendsModal";
 import { getAiTripSuggestions } from "@/lib/api";
 import { TripMapSection } from "./TripMapSection";
 import { TripPhotosSection } from "./TripPhotosSection";
+import { TripChatSection } from "./TripChatSection";
 import {
   INITIAL_SAMPLE_TRIP,
   type MockTripDetail,
@@ -420,50 +421,10 @@ export function TripWorkspaceView({
               </div>
             )}
 
-            {/* 2. GROUP DISCUSSION / CHAT PLACEHOLDER */}
+            {/* 2. GROUP DISCUSSION / CHAT */}
             {activeTab === "chat" && (
-              <div className="space-y-4 animate-in fade-in duration-150">
-                <Card padding="lg" className="border-line text-center">
-                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-moss text-pine">
-                    <Icon name="message" size={26} />
-                  </div>
-
-                  <span className="mt-4 inline-block rounded-full bg-sand px-3 py-1 text-[10px] font-bold tracking-wider uppercase text-[#8b6f43]">
-                    Feature Placeholder · Coming Soon
-                  </span>
-
-                  <h2 className="mt-3 font-display text-2xl tracking-[-0.03em] text-ink sm:text-3xl">
-                    Group Discussion & Chat
-                  </h2>
-
-                  <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-muted">
-                    Real-time chat is being built in the collaborative trip engine. Soon, you and your travel companions will be able to share recommendations, debate destinations, drop links, and vote on activities right in this room.
-                  </p>
-
-                  <div className="mx-auto mt-8 max-w-md rounded-2xl border border-line bg-canvas/60 p-4 text-left">
-                    <p className="eyebrow text-[10px] font-bold text-muted">Room participant feed preview</p>
-                    <div className="mt-3 space-y-3 opacity-60">
-                      <div className="flex items-start gap-2.5 text-xs">
-                        <MemberAvatar initials="RK" tone="pine" size="sm" />
-                        <div className="rounded-2xl rounded-tl-sm bg-paper p-3 border border-line shadow-xs">
-                          <p className="font-bold text-ink text-[11px]">Rahul Kapoor</p>
-                          <p className="text-muted mt-0.5">Found a great café for Day 02 breakfast!</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2.5 text-xs">
-                        <MemberAvatar initials="SR" tone="blue" size="sm" />
-                        <div className="rounded-2xl rounded-tl-sm bg-paper p-3 border border-line shadow-xs">
-                          <p className="font-bold text-ink text-[11px]">Sneha Rao</p>
-                          <p className="text-muted mt-0.5">Added it to our shared wish list.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <p className="mt-6 text-xs text-muted/80">
-                    Live socket communication will connect to this room in the next milestone.
-                  </p>
-                </Card>
+              <div className="animate-in fade-in duration-150">
+                <TripChatSection tripId={tripId!} />
               </div>
             )}
 

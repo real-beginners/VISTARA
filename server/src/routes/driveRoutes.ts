@@ -52,4 +52,71 @@ router.post("/init-folder", requireAuth, async (req: Request, res: Response) => 
   }
 });
 
+import multer from "multer";
+import { uploadFileToDrive } from "../services/driveService";
+
+// Multer config: memory storage, 10MB limit
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+  fileFilter: (req, file, cb) => {
+    if (!file.mimetype.startsWith("image/")) {
+      return cb(new Error("Only image files are allowed"));
+    }
+    cb(null, true);
+  },
+});
+
+router.post("/upload", requireAuth, upload.single("file"), async (req: Request, res: Response) => {
+  try {
+    const tripId = req.body.tripId;
+    const accessToken = req.body.accessToken;
+    const userId = req.user!.uid;
+
+    if (!tripId || !accessToken) {
+      res.status(400).json({ error: "tripId and accessToken are required" });
+      return;
+    }
+
+    if (!req.file) {
+      res.status(400).json({ error: "No image file provided" });
+      return;
+    }
+
+    // Verify trip membership
+    const { trip, isMember, tripExists } = await getTripById(tripId, userId);
+    if (!tripExists || !trip) {
+      res.status(404).json({ error: "Trip not found" });
+      return;
+    }
+    if (!isMember) {
+      res.status(403).json({ error: "You are not a member of this trip" });
+      return;
+    }
+
+    if (!trip.driveFolderId) {
+      res.status(400).json({ error: "Trip does not have a Google Drive folder initialized" });
+      return;
+    }
+
+    // Upload to Drive
+    const uploadedFile = await uploadFileToDrive(
+      accessToken,
+      trip.driveFolderId,
+      req.file.originalname,
+      req.file.mimetype,
+      req.file.buffer
+    );
+
+    res.json({
+      fileName: req.file.originalname,
+      fileUrl: uploadedFile.url,
+      fileId: uploadedFile.id,
+    });
+  } catch (error: any) {
+    console.error("[Drive Route Upload Error]", error.message);
+    res.status(500).json({ error: "Failed to upload file", details: error.message });
+  }
+});
+
 export default router;
